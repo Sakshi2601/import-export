@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Import Export System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .register-card {
+            background: rgba(255, 255, 255, 0.7); /* Transparent white */
+            backdrop-filter: blur(10px); /* Glassmorphism effect */
+            padding: 30px;
+            border-radius: 15px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+        .form-control {
+            border-radius: 10px; /* Rounded input fields */
+        }
+        .btn-register {
+          background: linear-gradient(to right, #ff6f61, #ff9052); /* Soft red-orange */
+          color: white;
+          font-weight: bold;
+          border-radius: 25px;
+          padding: 8px 20px;
+          transition: 0.3s ease-in-out;
+          border: none;
+        }
+        .btn-register:hover {
+          background: linear-gradient(to right, #ff9052, #ff6f61); /* Reverse gradient */
+          color: white;
+          transform: scale(1.05);
+        }
+        .bottom-text a {
+            text-decoration: none;
+            font-weight: bold;
+            color: blue;
+            transition: 0.3s ease-in-out;
+        }
+        .bottom-text a:hover {
+            color: darkblue;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="register-card">
+        <h3 class="text-center">Register</h3>
+        <form>
+            <div class="mb-3">
+                <label for="port_id" class="form-label">Port ID</label>
+                <input type="text" class="form-control" id="port_id" placeholder="Enter your Port ID">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Enter your Password">
+            </div>
+            <div class="mb-3">
+                <label for="confirm_password" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" id="confirm_password" placeholder="Confirm your Password">
+            </div>
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" class="form-control" id="location" placeholder="Enter your Location">
+            </div>
+            <div class="mb-3">
+                <label for="role" class="form-label">Role</label>
+                <select class="form-select" id="role">
+                    <option selected disabled>Select Role</option>
+                    <option value="consumer">Consumer</option>
+                    <option value="seller">Seller</option>
+                </select>
+            </div> 
+            <div class="d-flex justify-content-center mt-4">
+              <button type="button" class="btn btn-register" onclick="window.location.href='login.html'">Register</button>
+            </div>
+        </form>
+        <div class="bottom-text text-center m-3">
+          <p>New here? <a href="register.html">Create an account</a></p>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

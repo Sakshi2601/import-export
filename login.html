@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Import Export System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-card {
+            background: rgba(255, 255, 255, 0.7); /* Transparent white */
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+        .profile-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+        .form-control {
+            border-radius: 10px;
+        }
+        .btn-login {
+          background: linear-gradient(to right, #ff6f61, #ff9052); /* Soft red-orange */
+          color: white;
+          font-weight: bold;
+          border-radius: 25px;
+          padding: 8px 20px;
+          transition: 0.3s ease-in-out;
+          border: none;
+        }
+        .btn-login:hover {
+          background: linear-gradient(to right, #ff9052, #ff6f61); /* Reverse gradient */
+          color: white;
+          transform: scale(1.05);
+        }
+        .bottom-text a {
+            text-decoration: none;
+            font-weight: bold;
+            color: blue;
+            transition: 0.3s ease-in-out;
+        }
+        .bottom-text a:hover {
+            color: darkblue;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+      <div class="d-flex justify-content-center">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile" class="profile-img">
+      </div>
+        <h3 class="text-center">Login</h3>
+        <form onsubmit="return loginUser()">
+            <div class="mb-3">
+                <label for="port_id" class="form-label">Port ID</label>
+                <input type="text" class="form-control" id="port_id" placeholder="Enter your Port ID" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Enter your Password" required>
+            </div>
+            <div class="mb-3">
+                <label for="role" class="form-label">Role</label>
+                <select class="form-select" id="role" required>
+                    <option selected disabled>Select Role</option>
+                    <option value="consumer">Consumer</option>
+                    <option value="seller">Seller</option>
+                </select>
+            </div>
+            <div class="d-flex justify-content-center mt-4">
+              <button type="submit" class="btn btn-success btn-login">Login</button>
+            </div>
+        </form>
+
+      <div class="bottom-text text-center m-3">
+        <p>New here? <a href="register.html">Create an account</a></p>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function loginUser() {
+            let role = document.getElementById("role").value;
+            if (role === "consumer") {
+                window.location.href = "consumer.html";
+            } else if (role === "seller") {
+                window.location.href = "seller.html";
+            } else {
+                alert("Please select a role.");
+                return false;
+            }
+            return false; // Prevents actual form submission
+        }
+    </script>
+</body>
+</html>
