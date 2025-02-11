@@ -6,52 +6,68 @@
     <title>Import Export System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
     <style>
-                .navbar {
-            background: rgba(255, 255, 255, 0.4); /* Glass effect */
+        body {
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #343a40;
+            color: white;
+            padding: 20px;
+            position: fixed;
+            left: 0;
+            transition: transform 0.3s ease-in-out;
+        }
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+        .sidebar a:hover {
+            background: #495057;
+        }
+        .content {
+            margin-left: 260px;
+            padding: 20px;
+            width: 100%;
+            transition: margin-left 0.3s ease-in-out;
+        }
+        .hidden {
+            transform: translateX(-100%);
+        }
+        .collapsed-content {
+            margin-left: 0 !important;
+            width: 100% !important;
+        }
+        .cart-container {
+            display: none;
+        }
+        .navbar {
+            background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
             border-radius: 12px;
             padding: 15px 20px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
-        .navbar-brand {
-            font-size: 22px;
-            font-weight: bold;
-            color: black !important;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .product {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
         }
-        .navbar-brand img {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-        }
-        .nav-link {
-            color: black !important;
-            font-size: 16px;
-            font-weight: 500;
-            margin-right: 15px;
-            transition: all 0.3s ease-in-out;
-            position: relative;
-        }
-        .nav-link::after {
-            content: "";
-            display: block;
-            width: 0;
-            height: 2px;
-            background: black;
-            transition: width 0.3s ease-in-out;
-            position: absolute;
-            bottom: -3px;
-            left: 0;
-        }
-        .nav-link:hover::after {
-            width: 100%;
+        .product:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
         .btn-custom {
-            background: linear-gradient(to right, #ff6f61, #ff9052); /* Blue gradient */
+            background: linear-gradient(to right, #ff6f61, #ff9052);
             color: white;
             font-weight: bold;
             border-radius: 25px;
@@ -60,10 +76,11 @@
             border: none;
         }
         .btn-custom:hover {
-            background: linear-gradient(to right, #ff9052, #ff6f61); /* Reverse gradient */
+            background: linear-gradient(to right, #ff9052, #ff6f61);
             color: white;
             transform: scale(1.05);
         }
+
         .btn-gradient {
             background: linear-gradient(45deg, #ff7e5f, #feb47b);
             color: white;
@@ -74,197 +91,207 @@
             border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+        .cart-summary { 
+            text-align: right; 
+            margin-top: 20px; 
+            font-size: 1.2rem; 
+        }
+        .cart-summary .total { 
+            font-weight: bold; 
+            font-size: 1.4rem; 
+        }
+        .gradient-btn {
+            background: linear-gradient(to right, #ff4b2b, #ff416c);
+            border: none;
+            transition: 0.3s ease-in-out;
+        }
+    
+        .gradient-btn:hover {
+            background: linear-gradient(to right, #ff1e00, #e60073);
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
-  <header>
-    <!-- Premium Glass Navbar -->
-    <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <!-- Logo & Brand Name -->
-            <a class="navbar-brand" href="#">
-                <img src="https://cdn-icons-png.flaticon.com/512/2944/2944067.png" alt="Logo"> 
-                Import - Export System
-            </a>
+    <div class="sidebar" id="sidebar">
+        <span class="close-btn text-white" onclick="toggleSidebar()">&times;</span>
+        <h4>Navigation</h4>
+        <a href="index.html"><i class="bi bi-house"></i> Home</a>
+        <a href="orders_consumer.html"><i class="bi bi-cart"></i> Orders</a>
+        <a href="about.html"><i class="bi bi-info-circle"></i> About</a>
+        <a href="contact.html"><i class="bi bi-envelope"></i> Contact</a>
+    </div>
 
-            <!-- Navbar Toggle for Mobile -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <div class="content" id="mainContent">
+        <button class="btn btn-dark mb-3 mt-2" id="toggleBtn" onclick="toggleSidebar()">☰</button>
+        <button class="btn-custom btn-info mb-3 mt-2" onclick="toggleCart()">View Cart</button>
+        <nav class="navbar navbar-light bg-light shadow-sm p-3 mb-4">
+            <div class="container-fluid">
+                <span class="navbar-brand">Consumer Dashboard</span>
+                <a href="login.html" class="btn-custom">Logout</a>
+            </div>
+        </nav>
 
-            <!-- Navbar Links -->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="orders_consumer.html">Orders</a></li>
-                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                </ul>
-                <!-- Profile & Logout Buttons -->
-                <a href="profile.html" class="btn btn-custom ms-3">Profile</a>
-                <a href="login.html" class="btn btn-custom ms-2">Logout</a>
+        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search for products..." onkeyup="searchProducts()">
+        
+        <div class="row g-3" id="productList"></div>
+
+        <div class="cart-container" id="cartContainer">
+            <h2>Your Cart</h2>
+            <table class="table table-bordered cart-table">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="cart"></tbody>
+            </table>
+            <div class="cart-summary">
+                <p class="total">Grand Total: $<span id="grand-total">0.00</span></p>
+                <button class="btn text-white fw-bold gradient-btn" onclick="buyItems()">Buy Now</button>
+                <button class="btn btn-outline-dark fw-semibold" onclick="toggleCart()">Continue Shopping</button>
             </div>
         </div>
-    </nav>
-  </header>
 
-  <main>
-    <div class="container mt-5">
-      <h2 class="text-center">Consumer Dashboard</h2>
-      <div class="mb-3">
-          <input type="text" id="searchInput" class="form-control" placeholder="Search for products..." onkeyup="searchProducts()">
-      </div>
-      <div class="table-responsive text-center">
-          <table class="table table-hover glass-table">
-              <thead class="bg-dark text-white">
-                  <tr>
-                      <th>Product Name</th>
-                      <th>Price</th>
-                      <th>Action</th>
-                  </tr>
-              </thead>
-              <tbody id="productTable">
-                  <tr>
-                      <td>Smartphone</td>
-                      <td>$500</td>
-                      <td><button class="btn btn-gradient btn-sm" onclick="addToCart('Smartphone', '$500')">Add to Cart</button></td>
-                      <tr>
-                        <td>Laptop</td>
-                        <td>$900</td>
-                        <td><button class="btn btn-gradient btn-sm" onclick="addToCart('Laptop', 900)">Add to Cart</button></td>
-                    </tr>
-                    <tr>
-                        <td>Tablet</td>
-                        <td>$350</td>
-                        <td><button class="btn btn-gradient btn-sm" onclick="addToCart('Tablet', 350)">Add to Cart</button></td>
-                    </tr>
-                    <tr>
-                        <td>Smartwatch</td>
-                        <td>$200</td>
-                        <td><button class="btn btn-gradient btn-sm" onclick="addToCart('Smartwatch', 200)">Add to Cart</button></td>
-                    </tr>
-                    <tr>
-                        <td>Gaming Console</td>
-                        <td>$500</td>
-                        <td><button class="btn btn-gradient btn-sm" onclick="addToCart('Gaming Console', 500)">Add to Cart</button></td>
-                    </tr>
-                    <tr>
-                        <td>Bluetooth Speaker</td>
-                        <td>$80</td>
-                        <td><button class="btn btn-gradient btn-sm" onclick="addToCart('Bluetooth Speaker', 80)">Add to Cart</button></td>
-                    </tr>
-                    <tr>
-                        <td>4K Smart TV</td>
-                        <td>$1200</td>
-                        <td><button class="btn btn-gradient btn-sm" onclick="addToCart('4K Smart TV', 1200)">Add to Cart</button></td>
-                    </tr>
-                    <tr>
-                        <td>Wireless Mouse</td>
-                        <td>$30</td>
-                        <td><button class="btn btn-gradient btn-sm" onclick="addToCart('Wireless Mouse', 30)">Add to Cart</button></td>
-                    </tr>
-                    <tr>
-                        <td>Mechanical Keyboard</td>
-                        <td>$100</td>
-                        <td><button class="btn btn-gradient btn-sm" onclick="addToCart('Mechanical Keyboard', 100)">Add to Cart</button></td>
-                    </tr>
-                    <tr>
-                        <td>External Hard Drive</td>
-                        <td>$150</td>
-                        <td><button class="btn btn-gradient btn-sm" onclick="addToCart('External Hard Drive', 150)">Add to Cart</button></td>
-                    </tr>
-                    <tr>
-                        <td>VR Headset</td>
-                        <td>$400</td>
-                        <td><button class="btn btn-gradient btn-sm" onclick="addToCart('VR Headset', 400)">Add to Cart</button></td>
-                    </tr>
-                  </tr>
-              </tbody>
-          </table>
-      </div>
-      <div class="text-center mt-3" onclick="window.location.href='orders_consumer.html'">
-        <button class="btn btn-success">Show Ordered Products</button>
-    </div>
-    </div>
-  </main>
-
-  <footer class="bg-dark text-light py-4 mt-5">
-    <div class="container">
-        <div class="row">
-            <!-- Left Column: Logo & About -->
-            <div class="col-md-6">
-                <div class="d-flex align-items-center mb-2">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2944/2944067.png" alt="Logo" width="50" height="50" class="me-2">
-                    <h5 class="m-0">Import - Export System</h5>
-                </div>
-                <p class="text">Your trusted platform for seamless global trade. Secure, fast, and efficient import-export solutions.</p>
-            </div>
-
-            <!-- Right Column: Quick Links & Socials -->
-            <div class="col-md-6 text-md-end">
-                <h5>Quick Links</h5>
-                <ul class="list-unstyled">
-                    <li><a href="index.html" class="text-light text-decoration-none">Home</a></li>
-                    <li><a href="orders.html" class="text-light text-decoration-none">Orders</a></li>
-                    <li><a href="about.html" class="text-light text-decoration-none">About</a></li>
-                    <li><a href="contact.html" class="text-light text-decoration-none">Contact</a></li>
-                </ul>
-                
-                <!-- Social Media Icons -->
-                <div class="mt-3">
-                    <a href="#" class="text-light me-3"><i class="bi bi-facebook"></i></a>
-                    <a href="#" class="text-light me-3"><i class="bi bi-twitter"></i></a>
-                    <a href="#" class="text-light me-3"><i class="bi bi-instagram"></i></a>
-                    <a href="#" class="text-light"><i class="bi bi-linkedin"></i></a>
-                </div>
-            </div>
-        </div>
-        <hr class="bg-light">
-        <div class="text-center">
-            <p class="m-0">&copy; 2025 Import - Export System. All Rights Reserved.</p>
+        <div class="text-center mt-3" onclick="window.location.href='orders_consumer.html'">
+            <button class="btn btn-success">Show Ordered Products</button>
         </div>
     </div>
-  </footer>
 
-<!-- Bootstrap Icons -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <script>
+        const products = [
+            { id: 1, name: "Smartphone", price: 500 },
+            { id: 2, name: "Tablet", price: 900},
+            { id: 3, name: "Laptop", price: 1000 },
+            { id: 4, name: "Smartwatch", price: 900},
+            { id: 5, name: "Gaming Console", price: 900},
+            { id: 6, name: "Bluetooth Speaker", price: 900},
+            { id: 7, name: "4K Smart TV", price: 900},
+            { id: 8, name: "Wireless Mouse", price: 900},
+            { id: 9, name: "Mechanical Keyboard", price: 900},
+            { id: 10, name: "External Hard Drive", price: 900},
+            { id: 11, name: "VR Headset", price: 900},
+            { id: 12, name: "VR Headset", price: 900}
+        ];
+        let cart = [];
 
-  <div class="modal fade" id="cartModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Added to Cart</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body" id="cartDetails"></div>
-            <div class="modal-footer">
-                <button class="btn btn-success" onclick="confirmOrder()">Buy Now</button>
-            </div>
-        </div>
-    </div>
-  </div>
+        function generateProductCard(product) {
+            return `
+                <div class="col-md-4 col-sm-6 col-12 product-item">
+                    <div class="card product">
+                        <div class="card-body">
+                            <h5 class="card-title">${product.name}</h5>
+                            <p class="card-text">$${product.price}</p>
+                            <button class="btn btn-gradient btn-sm" onclick="addToCart(${product.id})">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>`;
+        }
 
-  <script>
-      function searchProducts() {
-          let input = document.getElementById("searchInput").value.toLowerCase();
-          let rows = document.querySelectorAll("#productTable tr");
-          rows.forEach(row => {
-              let productName = row.cells[0].innerText.toLowerCase();
-              row.style.display = productName.includes(input) ? "" : "none";
-          });
-      }
-      function addToCart(product, price) {
-          document.getElementById("cartDetails").innerHTML = `<p><strong>Product:</strong> ${product}</p><p><strong>Price:</strong> ${price}</p>`;
-          let cartModal = new bootstrap.Modal(document.getElementById("cartModal"));
-          cartModal.show();
-      }
-      function confirmOrder() {
-          alert("Ordered Successfully!");
-          window.location.href = "consumer.html";
-      }
-  </script>
+        function displayProducts() {
+            document.getElementById('productList').innerHTML = products.map(generateProductCard).join('');
+        }
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        function searchProducts() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filteredProducts = products.filter(p => p.name.toLowerCase().includes(query));
+            document.getElementById('productList').innerHTML = filteredProducts.map(generateProductCard).join('');
+        }
+
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("hidden");
+            document.getElementById("mainContent").classList.toggle("collapsed-content");
+
+            const productItems = document.querySelectorAll('.product-item');
+            productItems.forEach(item => {
+                item.classList.toggle("col-md-4");
+                item.classList.toggle("col-md-3");
+            });
+        }
+
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            const existingItem = cart.find(item => item.id === id);
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            alert("Successfully added to cart!");
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartList = document.getElementById('cart');
+            const grandTotalElement = document.getElementById('grand-total');
+
+            cartList.innerHTML = '';
+            let grandTotal = 0;
+
+            cart.forEach((item, index) => {
+                const total = item.price * item.quantity;
+                grandTotal += total;
+                cartList.innerHTML += `
+                    <tr>
+                        <td> ${item.name}</td>
+                        <td>$${item.price.toFixed(2)}</td>
+                        <td>
+                            <button class="btn btn-sm btn-secondary" onclick="changeQuantity(${index}, -1)">-</button>
+                            ${item.quantity}
+                            <button class="btn btn-sm btn-secondary" onclick="changeQuantity(${index}, 1)">+</button>
+                        </td>
+                        <td>$${total.toFixed(2)}</td>
+                        <td><button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})">Remove</button></td>
+                    </tr>`;
+            });
+
+            grandTotalElement.textContent = grandTotal.toFixed(2);
+        }
+
+        function changeQuantity(index, change) {
+            cart[index].quantity += change;
+            if (cart[index].quantity <= 0) cart.splice(index, 1);
+            updateCart();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function buyItems() {
+            alert("Order placed successfully!");
+            cart = [];
+            updateCart();
+        }
+
+        
+        function toggleCart() {
+            document.getElementById("cartContainer").classList.toggle("d-block");
+        }
+
+        
+
+        function toggleCart() {
+            const cartContainer = document.getElementById("cartContainer");
+            const productList = document.getElementById("productList");
+            const searchInput = document.getElementById("searchInput");
+            if (cartContainer.style.display === 'none' || cartContainer.style.display === '') {
+                cartContainer.style.display = 'block';
+                productList.style.display = 'none';
+                searchInput.style.display = 'none';
+            } else {
+                cartContainer.style.display = 'none';
+                productList.style.display = 'flex';
+                searchInput.style.display = 'block';
+            }
+        }
+        
+        displayProducts();
+    </script>
 </body>
 </html>
